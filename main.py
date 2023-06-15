@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request                  # request는 request에 대한 정보에 접근 할 수 있게 해준다
-from extractors.indeed import extract_indeed_jobs                  # request란? 브라우저가 웹사이트에 가서 콘텐츠를 요청하는것을 말한다
-from extractors.wwr import extract_wwr_jobs                        # request는 어떤 정보를 갖고 있을까? => 요청하고 있는 URL이 무엇인지, IP주소가 무엇인지, cookies를 가지고 있는지
-  
+from flask import Flask, render_template, request, redirect, send_file          # request는 request에 대한 정보에 접근 할 수 있게 해준다
+from extractors.indeed import extract_indeed_jobs                               # request란? 브라우저가 웹사이트에 가서 콘텐츠를 요청하는것을 말한다
+from extractors.wwr import extract_wwr_jobs                                     # request는 어떤 정보를 갖고 있을까? => 요청하고 있는 URL이 무엇인지, IP주소가 무엇인지, cookies를 가지고 있는지
+from extractors.save_file import save_to_file
 app = Flask("JobScrapper") # Jobscrapper라고 불리는 새로운 Flask application인 app 변수를 생성
 
 db = {}
@@ -23,6 +23,11 @@ def home():
 @app.route("/search")                                           # 2) 실제로 HTML 파일에 데이터를 보내는 것을 의미하기도 한다
 def search():
     keyword = request.args.get("keyword") # request의 arguments에서 keyword를 가져와서(즉, URL의 ?뒤에 있는 arguments에서 keyword를 가져와서)그 keyword를 search.html에 보낸다
+    if keyword == None:
+        return redirect("/")
+    elif keyword == "":
+        return redirect("/")
+   
     if keyword in db:
         jobs = db[keyword]
     else:
@@ -32,6 +37,18 @@ def search():
         db[keyword] = jobs  # db[keyword] => dictionary의 item에 접근할 수 있는 방법
     return render_template("search.html", keyword=keyword, jobs=jobs) # render_template은 Flask가 templates 폴더를 들여다 보게 한다
                                                            # 합친 하나의 List를 search.html로 보낸다
+
+
+@app.route("/export")
+def export():
+    keyword = request.args.get("keyword")
+    if keyword == None:
+        return redirect("/")
+    if keyword not in db:
+        return redirect(f"/search?keyword={keyword}") # 데이터베이스에 없는 keyword로 export에 접근하는 것을 방지
+    save_to_file(keyword, db[keyword])
+    return send_file(f"{keyword}.csv", as_attachment=True)
+
 
 
 app.run("127.0.0.1",port=8000, debug=True) # 생성한 app변수를 이용해 run()함수를 호출하면 Flask application을 생성해준다

@@ -8,7 +8,10 @@
 </head>
 <body>
     <main class="container">
-        <h1>Search Result for "{{keyword}}"</h1> <!--search함수에서 보낸 keyword를 받아서 사용, 중괄호 두 개 안에 variable을 넣으면 Flask가 variable을 값(데이터)으로 변환해준다-->
+        <hgroup>
+            <h1>Search Result for "{{keyword}}"</h1> <!--search함수에서 보낸 keyword를 받아서 사용, 중괄호 두 개 안에 variable을 넣으면 Flask가 variable을 값(데이터)으로 변환해준다-->
+            <a target="_blank" href="/export?keyword={{keyword}}">Export to file</a>  <!--target="_blank"를 주면 새 탭에서 열리게 된다-->
+        </hgroup>
         <figure>
             <table role="grid">
                 <thead>
