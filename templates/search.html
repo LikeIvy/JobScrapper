@@ -4,16 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Scrapper</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 </head>
 <body>
-    <h1>Search Result for "{{keyword}}"</h1> <!--search함수에서 보낸 keyword를 받아서 사용, 중괄호 두 개 안에 variable을 넣으면 Flask가 variable을 값(데이터)으로 변환해준다-->
-    {% for job in jobs %} <!--HTML에서 for문을 사용하는 문법, 중괄호 퍼센트 안에는 우리가 실행하고 싶은 Python 코드를 넣는것-->
-        <div>
-            <span>{{job.position}}</span> <!--Flask template안에서 job안의 link에 접근하는 방법, Python에서는 job['link']로 접근한것과 차이가 있음-->
-            <span>{{job.company}}</span>
-            <span>{{job.location}}</span>
-            <a href="{{job.link}}" target="_blank">Apply now &rarr;</a>
-        </div> 
-    {% endfor %}
+    <main class="container">
+        <h1>Search Result for "{{keyword}}"</h1> <!--search함수에서 보낸 keyword를 받아서 사용, 중괄호 두 개 안에 variable을 넣으면 Flask가 variable을 값(데이터)으로 변환해준다-->
+        <figure>
+            <table role="grid">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Company</th>
+                        <th>Location</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %} <!--HTML에서 for문을 사용하는 문법, 중괄호 퍼센트 안에는 우리가 실행하고 싶은 Python 코드를 넣는것-->
+                        <tr>
+                            <td>{{job.position}}</td> <!--Flask template안에서 job안의 link에 접근하는 방법, Python에서는 job['link']로 접근한것과 차이가 있음-->
+                            <td>{{job.company}}</td>
+                            <td>{{job.location}}</td>
+                            <td><a href="{{job.link}}" target="_blank">Apply now &rarr;</a></td>
+                        </tr> 
+                    {% endfor %}
+                </tbody>
+            </table>
+        </figure>
+    </main>
 </body>
 </html>
