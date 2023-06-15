@@ -21,8 +21,8 @@ def search():
     indeed = extract_indeed_jobs(keyword) # keyword로 두 개의 function을 호출
     wwr = extract_wwr_jobs(keyword)
     jobs = indeed + wwr # 두 개의 함수 호출 결과로 나온 각각의 List 두 가지를 하나로 합친다
-    return render_template("search.html", keyword=keyword, jobs = jobs) # render_template은 Flask가 templates 폴더를 들여다 보게 한다
+    return render_template("search.html", keyword=keyword, jobs=jobs) # render_template은 Flask가 templates 폴더를 들여다 보게 한다
                                                            # 합친 하나의 List를 search.html로 보낸다
 
 
-app.run("127.0.0.1") # 생성한 app변수를 이용해 run()함수를 호출하면 Flask application을 생성해준다
+app.run("127.0.0.1",port=8000, debug=True) # 생성한 app변수를 이용해 run()함수를 호출하면 Flask application을 생성해준다
