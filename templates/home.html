@@ -6,6 +6,15 @@
     <title>Job Scrapper</title>
 </head>
 <body>
-    <h1>Hello to you! My name is {{name}}</h1> <!--Flask는 주어진 변수를 모두 replace하면서 이 템플릿을 render하는 것-->
+    <h1>Job Scrapper</h1>
+    <h4>What job do you want?</h4>
+    <form action="/search"> <!--action은 form이 어디로 가는지를 말한다-->
+                            <!--form이 submit될 때, 즉 user가 enter나 search버튼을 누를 때 /search 페이지로 이동하도록 한 것-->
+                            <!--/search페이지로 가서 URL에 있는 input 값들에 접근할 수 있게 된다-->
+                            <!--왜냐면 우리가 GET method를 사용하고 있기 때문인데 => 모든 form은 기본으로 GET method가 설정되어 있다-->
+                            <!--GET은 사용자가 action으로 넣은 page로 이동하게 되면 user가 우리의 input에 넣은 모든 value를 URL에 넣게 됨-->
+        <input type="text" name="keyword" placeholder="Write keyword please"> <!--name=keyword의 keyword가 URL에 보이게 된다-->
+        <button>Search</button>                                               
+    </form>
 </body>
 </html>
